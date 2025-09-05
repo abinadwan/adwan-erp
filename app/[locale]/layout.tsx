@@ -6,6 +6,7 @@ import en from '../../locales/en/common.json';
 import ar from '../../locales/ar/common.json';
 
 export const metadata = { title: 'ERP-HR' };
+export const dynamic = 'force-dynamic';
 
 export default function RootLayout({ children, params: { locale } }: { children: ReactNode; params: { locale: string } }) {
   unstable_setRequestLocale(locale);
