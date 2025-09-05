@@ -1,8 +1,13 @@
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
 
-export default async function HomePage({ params }: { params: { locale: string } }) {
+type PageProps = {
+  params: { locale: string };
+};
+
+export default async function HomePage({ params }: PageProps) {
   const t = await getTranslations('common');
+
   const services = [
     { key: 'dashboard', path: 'dashboard' },
     { key: 'employees', path: 'employees' },
@@ -12,11 +17,11 @@ export default async function HomePage({ params }: { params: { locale: string } 
     { key: 'departments', path: 'departments' },
     { key: 'jobs', path: 'jobs' },
     { key: 'reports', path: 'reports' },
-    { key: 'settings', path: 'settings' },
+    { key: 'settings', path: 'settings' }
   ];
+
   return (
-    <div className="p-4 space-y-4">
-> main
+    <main className="p-4 space-y-4">
       <ul className="list-disc pl-5 space-y-2">
         {services.map(({ key, path }) => (
           <li key={path}>
@@ -29,6 +34,6 @@ export default async function HomePage({ params }: { params: { locale: string } 
           </li>
         ))}
       </ul>
-    </div>
+    </main>
   );
 }
