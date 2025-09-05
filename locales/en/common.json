@@ -1,0 +1,13 @@
+{
+  "dashboard": "Dashboard",
+  "employees": "Employees",
+  "attendance": "Attendance",
+  "leave": "Leave",
+  "payroll": "Payroll",
+  "departments": "Departments",
+  "jobs": "Jobs",
+  "reports": "Reports",
+  "settings": "Settings",
+  "sign_in": "Sign In",
+  "sign_up": "Sign Up"
+}
