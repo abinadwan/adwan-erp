@@ -1,10 +1,7 @@
 'use client';
 import Link from 'next/link';
 import LangSwitcher from './LangSwitcher';
-import { useLocale } from 'next-intl';
-
-export default function Navbar() {
-  const locale = useLocale();
+in
   return (
     <nav className="flex items-center justify-between p-4 bg-white shadow">
       <Link href={`/${locale}`} className="font-bold">
@@ -12,7 +9,7 @@ export default function Navbar() {
       </Link>
       <div className="flex items-center gap-4">
         <Link href={`/${locale}`} className="hover:underline">
-          Home
+main
         </Link>
         <LangSwitcher />
       </div>
