@@ -1,4 +1,5 @@
 {
+  "home": "Home",
   "dashboard": "Dashboard",
   "employees": "Employees",
   "attendance": "Attendance",
@@ -9,5 +10,7 @@
   "reports": "Reports",
   "settings": "Settings",
   "sign_in": "Sign In",
-  "sign_up": "Sign Up"
+  "sign_up": "Sign Up",
+  "welcome_title": "Welcome",
+  "welcome_message": "Welcome to the application. Use the navigation to get started."
 }
