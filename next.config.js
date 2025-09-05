@@ -20,6 +20,8 @@ const securityHeaders = [
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   productionBrowserSourceMaps: false,
+  output: 'export',
+  images: { unoptimized: true },
   async headers() {
     return [
       {
