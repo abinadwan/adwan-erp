@@ -17,7 +17,7 @@ export default async function HomePage({ params }: PageProps) {
     { key: 'departments', path: 'departments' },
     { key: 'jobs', path: 'jobs' },
     { key: 'reports', path: 'reports' },
-    { key: 'settings', path: 'settings' }
+    { key: 'settings', path: 'settings' },
   ];
 
   return (

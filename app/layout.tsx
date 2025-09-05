@@ -1,10 +1,12 @@
 import '../styles/globals.css';
-import { ReactNode } from 'react';
 import { unstable_setRequestLocale } from 'next-intl/server';
+import { ReactNode } from 'react';
+import { z } from 'zod';
+
 import IntlProvider from '../components/IntlProvider';
 import Navbar from '../components/Navbar';
-import en from '../locales/en/common.json';
 import ar from '../locales/ar/common.json';
+import en from '../locales/en/common.json';
 import nextIntlConfig from '../next-intl.config';
 
 export const metadata = { title: 'ERP-HR' };
@@ -17,7 +19,9 @@ export default function RootLayout({
   children: ReactNode;
   params: { locale?: string };
 }) {
-  const locale = params?.locale ?? nextIntlConfig.defaultLocale;
+  const LocaleSchema = z.enum(['en', 'ar']);
+  const parsed = LocaleSchema.safeParse(params?.locale);
+  const locale = parsed.success ? parsed.data : nextIntlConfig.defaultLocale;
   unstable_setRequestLocale(locale);
   const messages = locale === 'ar' ? ar : en;
   return (

@@ -1,8 +1,9 @@
 'use client';
 
 import Link from 'next/link';
-import LangSwitcher from './LangSwitcher';
 import { useLocale } from 'next-intl';
+
+import LangSwitcher from './LangSwitcher';
 
 export default function Navbar() {
   const locale = useLocale();
