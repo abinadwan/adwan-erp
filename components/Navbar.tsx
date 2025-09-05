@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import LangSwitcher from './LangSwitcher';
-ain
+main
   return (
     <nav className="flex items-center justify-between p-4 bg-white shadow">
       <Link href={`/${locale}`} className="font-bold">

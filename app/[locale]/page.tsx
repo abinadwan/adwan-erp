@@ -16,8 +16,7 @@ export default async function HomePage({ params }: { params: { locale: string } 
   ];
   return (
     <div className="p-4 space-y-4">
-      <h1 className="text-2xl font-bold">Welcome</h1>
-      <p>Welcome to the application. Use the navigation to get started.</p>
+> main
       <ul className="list-disc pl-5 space-y-2">
         {services.map(({ key, path }) => (
           <li key={path}>
