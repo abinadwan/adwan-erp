@@ -21,6 +21,3 @@ export default function RootLayout({ children, params: { locale } }: { children:
   );
 }
 
-export function generateStaticParams() {
-  return [{ locale: 'ar' }, { locale: 'en' }];
-}
