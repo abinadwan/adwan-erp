@@ -1,0 +1,48 @@
+openapi: 3.0.3
+info:
+  title: ERP API
+  version: 0.1.0
+servers:
+  - url: https://api.example.com
+paths:
+  /auth/login:
+    post:
+      summary: Email login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email: { type: string }
+                password: { type: string }
+      responses:
+        '200': { description: OK }
+  /orgs:
+    get:
+      summary: List organizations
+      responses:
+        '200': { description: OK }
+    post:
+      summary: Create organization
+      responses:
+        '201': { description: Created }
+  /sales/invoices:
+    post:
+      summary: Create invoice
+      responses:
+        '201': { description: Created }
+    get:
+      summary: List invoices
+      responses:
+        '200': { description: OK }
+  /inventory/stock-moves:
+    post:
+      summary: Transfer stock between warehouses
+      responses:
+        '201': { description: Created }
+  /finance/journal-entries:
+    post:
+      summary: Create journal entry
+      responses:
+        '201': { description: Created }
