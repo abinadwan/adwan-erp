@@ -1,9 +1,13 @@
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
+import { supabaseServer } from '../../../lib/supabase/server';
+
+type AppSettings = { company_name: string };
 
 export default async function Settings() {
-  const supabase = createServerComponentClient({ cookies });
-  const { data } = await supabase.from('settings').select('*').single();
+  const supabase = supabaseServer();
+  const { data } = await supabase
+    .from('settings')
+    .select('*')
+    .single<AppSettings>();
   return (
     <div className="p-4 space-y-2">
       <h1 className="text-2xl font-bold">Settings</h1>

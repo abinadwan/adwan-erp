@@ -1,9 +1,9 @@
 // Simple stub implementation of Supabase client helpers used for offline page testing.
-// When Supabase environment variables are missing, next.config.mjs aliases
-// '@supabase/auth-helpers-nextjs' to this file so that pages can render without
+// When Supabase environment variables are missing, next.config.js aliases
+// '@supabase/ssr' to this file so that pages can render without
 // an active database connection.
 
-type QueryResponse<T = any> = Promise<{ data: T; error: null }>; // Generic successful response
+type QueryResponse<T = unknown> = Promise<{ data: T; error: null }>;
 
 const createQueryBuilder = () => ({
   select: async (): QueryResponse<[]> => ({ data: [], error: null }),
@@ -27,10 +27,8 @@ function createStubClient() {
     storage: {
       from: () => createQueryBuilder(),
     },
-  } as any;
+  } as Record<string, unknown>;
 }
 
-export const createServerComponentClient = () => createStubClient();
-export const createClientComponentClient = () => createStubClient();
-export const createBrowserSupabaseClient = () => createStubClient();
-
+export const createServerClient = () => createStubClient();
+export const createBrowserClient = () => createStubClient();

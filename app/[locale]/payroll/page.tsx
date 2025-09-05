@@ -1,8 +1,14 @@
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
+import { supabaseServer } from '../../../lib/supabase/server';
+
+type PayrollItem = {
+  id: string;
+  employee_id: string;
+  label: string;
+  amount: number;
+};
 
 export default async function Payroll() {
-  const supabase = createServerComponentClient({ cookies });
+  const supabase = supabaseServer();
   const { data } = await supabase.from('payroll_items').select('*').limit(50);
   return (
     <div className="p-4">
@@ -16,7 +22,7 @@ export default async function Payroll() {
           </tr>
         </thead>
         <tbody>
-          {data?.map((p) => (
+          {data?.map((p: PayrollItem) => (
             <tr key={p.id} className="border-t">
               <td className="p-2">{p.employee_id}</td>
               <td className="p-2">{p.label}</td>

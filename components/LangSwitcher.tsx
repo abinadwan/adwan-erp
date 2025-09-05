@@ -8,7 +8,7 @@ export default function LangSwitcher() {
   const locale = useLocale();
   const switchLocale = () => {
     const next = locale === 'ar' ? 'en' : 'ar';
-    const segments = pathname.split('/').slice(2); // remove leading '' and locale
+    const segments = pathname.split('/').slice(2).filter(Boolean); // remove leading '' and locale
     router.push('/' + next + '/' + segments.join('/'));
   };
   return (

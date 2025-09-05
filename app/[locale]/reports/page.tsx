@@ -1,13 +1,22 @@
 'use client';
-import { BarChart, Bar, XAxis, YAxis, Tooltip } from 'recharts';
 import { useEffect, useState } from 'react';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { Bar, BarChart, Tooltip, XAxis, YAxis } from 'recharts';
+
+import { supabaseClient } from '../../../lib/supabase/client';
+
+type Headcount = {
+  department: string;
+  count: number;
+};
 
 export default function Reports() {
-  const supabase = createClientComponentClient();
-  const [data, setData] = useState<any[]>([]);
+  const supabase = supabaseClient();
+  const [data, setData] = useState<Headcount[]>([]);
   useEffect(() => {
-    supabase.from('v_headcount_by_department').select('*').then((res) => setData(res.data || []));
+    supabase
+      .from('v_headcount_by_department')
+      .select('*')
+      .then(({ data }: { data: Headcount[] | null }) => setData(data ?? []));
   }, [supabase]);
   return (
     <div className="p-4">
