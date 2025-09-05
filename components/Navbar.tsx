@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import LangSwitcher from './LangSwitcher';
-in
+ain
   return (
     <nav className="flex items-center justify-between p-4 bg-white shadow">
       <Link href={`/${locale}`} className="font-bold">
@@ -9,7 +9,7 @@ in
       </Link>
       <div className="flex items-center gap-4">
         <Link href={`/${locale}`} className="hover:underline">
-main
+> main
         </Link>
         <LangSwitcher />
       </div>
