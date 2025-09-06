@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { parseCookies } from 'nookies';
+import type { GetServerSidePropsContext } from 'next';
 
 export default function Dashboard() {
   const router = useRouter();
@@ -48,9 +49,9 @@ export default function Dashboard() {
         <div className="bg-white p-4 rounded shadow mb-4">
           <h2 className="text-xl mb-2">Latest Audit</h2>
           <ul className="list-disc pl-5">
-            <li>User 'admin' logged in.</li>
-            <li>User 'admin' added a new employee.</li>
-            <li>User 'admin' updated payroll for employee #123.</li>
+            <li>User &apos;admin&apos; logged in.</li>
+            <li>User &apos;admin&apos; added a new employee.</li>
+            <li>User &apos;admin&apos; updated payroll for employee #123.</li>
           </ul>
         </div>
         <div className="bg-white p-4 rounded shadow">
@@ -66,7 +67,7 @@ export default function Dashboard() {
   );
 }
 
-export async function getServerSideProps(ctx: any) {
+export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   const { token } = parseCookies(ctx);
 
   if (!token) {

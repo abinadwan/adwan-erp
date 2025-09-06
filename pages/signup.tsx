@@ -39,7 +39,8 @@ export default function SignupPage() {
       } else {
         setError(data);
       }
-    } catch (error) {
+    } catch (err) {
+      console.error(err);
       setError('An unexpected error occurred.');
     }
   };
