@@ -28,6 +28,8 @@ const translations = {
     department: 'Department',
     employee: 'Employee',
     date: 'Date',
+    startDate: 'Start Date',
+    endDate: 'End Date',
     status: 'Status',
     pending: 'Pending',
     approved: 'Approved',
@@ -78,6 +80,8 @@ const translations = {
     department: 'القسم',
     employee: 'الموظف',
     date: 'التاريخ',
+    startDate: 'تاريخ البدء',
+    endDate: 'تاريخ الانتهاء',
     status: 'الحالة',
     pending: 'معلق',
     approved: 'موافق عليه',
@@ -258,4 +262,3 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('logout')?.addEventListener('click', logout);
   applyTranslations();
 });
-

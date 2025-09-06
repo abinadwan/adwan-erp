@@ -1,89 +1,41 @@
-# ERP-HR
+# Simple HRMS Dashboard
 
-ERP-HR dashboard built with Next.js 14 App Router, TypeScript, TailwindCSS, next-intl and Supabase.
+A client-side HRMS (Human Resource Management System) dashboard built with vanilla JavaScript, HTML, and Tailwind CSS. All data is stored locally in your browser using `localStorage`.
 
 ## Features
 
-- Supabase authentication and CRUD modules for employees, attendance, payroll and more.
+- **Client-Side CRUD:** Manage employees, departments, attendance, leaves, and payroll.
+- **Role-Based Access:** Simple 'Admin' and 'Viewer' roles.
 - Internationalization (English/Arabic) with RTL support.
-- Strong security defaults: headers, CSP, validation and rate limiting.
+- **Data Export:** Export data tables to CSV.
+- **Audit Trail:** Tracks all actions performed within the application.
 
 ## Tech Stack
 
-- Next.js 14 + TypeScript
+- HTML5
+- Vanilla JavaScript (ES6+)
 - TailwindCSS
-- next-intl
-- Supabase (@supabase/ssr)
-- Playwright & Vitest
+- No framework, no build step required.
 
 ## Getting Started
 
-### Prerequisites
+There are no prerequisites. Simply open the `index.html` or `login.html` file in your web browser.
 
-- Node.js 18+
-
-### Environment
-
-Copy `.env.example` to `.env` and fill in:
-
-```
-NEXT_PUBLIC_SUPABASE_URL=...
-NEXT_PUBLIC_SUPABASE_ANON_KEY=...
-SUPABASE_SERVICE_ROLE_KEY=...
-NEXT_PUBLIC_APP_URL=http://localhost:3000
-DEFAULT_LOCALE=ar
-```
-
-### Install & Dev
-
-```
-npm install
-npm run dev
-```
-
-### Build & Test
-
-```
-npm run build
-npm test
-```
-
-(Playwright tests require the dev server running.)
-
-## Scripts
-
-| Script              | Description              |
-| ------------------- | ------------------------ |
-| `npm run dev`       | Start development server |
-| `npm run build`     | Create production build  |
-| `npm start`         | Start production server  |
-| `npm run lint`      | Run ESLint               |
-| `npm run typecheck` | Run TypeScript compiler  |
-| `npm test`          | Run unit and e2e tests   |
-| `npm run test:unit` | Run Vitest unit tests    |
-| `npm run test:e2e`  | Run Playwright tests     |
-| `npm run format`    | Format with Prettier     |
-| `npm run fix`       | ESLint --fix & Prettier  |
+The default PINs are:
+- **Admin:** `0000`
+- **Viewer:** `1111`
 
 ## Security Notes
 
-- Global security headers (HSTS, X-Frame-Options, etc.)
-- Content-Security-Policy with per-request nonce
-- Zod validation for all inputs
-- Basic rate limiting on API and auth routes
+This is a demo application and is **not secure for production use**. All data, including access PINs, is stored in `localStorage`. The role-based access control is implemented only on the client side and can be easily bypassed using browser developer tools.
 
 ## Deployment
 
-Deploy to Vercel or any Node 18 environment:
-
-```
-npm run build
-npm start
-```
+This project can be deployed on any static web hosting service, such as GitHub Pages.
 
 ## Contributing
 
-Pull requests welcome. Please run `npm run fix` and `npm test` before submitting.
+Pull requests are welcome.
 
 ## License
 

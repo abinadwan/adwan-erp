@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
   form.addEventListener('submit', e => {
     e.preventDefault();
     const role = document.getElementById('role').value;
-    const pin = sanitize(document.getElementById('pin').value.trim());
+    const pin = document.getElementById('pin').value.trim();
     const data = loadData();
     if (pin === data.pins[role]) {
       setSession(role);
