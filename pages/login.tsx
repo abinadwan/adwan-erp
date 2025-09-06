@@ -27,7 +27,8 @@ export default function LoginPage() {
         const message = await response.text();
         setError(message);
       }
-    } catch (error) {
+    } catch (err) {
+      console.error(err);
       setError('An unexpected error occurred.');
     }
   };

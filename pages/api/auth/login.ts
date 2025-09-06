@@ -4,6 +4,13 @@ import jwt from 'jsonwebtoken';
 import { setCookie } from 'nookies';
 import pool from '@/lib/db';
 
+interface User {
+  id: number;
+  username: string;
+  password: string;
+  role: string | null;
+}
+
 // It is recommended to use environment variables for the JWT secret.
 // Create a .env.local file in the root of your project and add the following:
 // JWT_SECRET=your-super-secret-key
@@ -25,7 +32,7 @@ export default async function handler(
   }
 
   try {
-    const { rows }: any = await pool.query(
+    const { rows } = await pool.query<User>(
       'SELECT id, username, password, role FROM users WHERE username = $1',
       [username]
     );

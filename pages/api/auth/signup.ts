@@ -2,6 +2,10 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import bcrypt from 'bcryptjs';
 import pool from '@/lib/db';
 
+interface ExistingUser {
+  id: number;
+}
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -17,7 +21,7 @@ export default async function handler(
   }
 
   try {
-    const { rows }: any = await pool.query(
+    const { rows } = await pool.query<ExistingUser>(
       'SELECT id FROM users WHERE username = $1',
       [username]
     );
