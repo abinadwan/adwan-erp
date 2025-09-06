@@ -1,6 +1,6 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
-const db = require('../db'); // تأكد من أن المسار إلى db.js صحيح
+const db = require('./db'); // المسار الصحيح إلى db.js
 
 const router = express.Router();
 
