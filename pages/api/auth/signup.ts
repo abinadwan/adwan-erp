@@ -17,8 +17,12 @@ export default async function handler(
   const { username, password } = req.body;
 
   if (!username || !password) {
-    return res.status(400).send('Please enter username and password.');
+    return res.status(400).json({ message: 'Please enter username and password.' });
   }
+  if (password.length < 6) {
+    return res.status(400).json({ message: 'Password must be at least 6 characters long.' });
+  }
+
 
   try {
     const { rows } = await pool.query<ExistingUser>(
@@ -27,7 +31,7 @@ export default async function handler(
     );
 
     if (rows.length > 0) {
-      return res.status(400).send('Username already exists.');
+      return res.status(400).json({ message: 'Username already exists.' });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -37,9 +41,9 @@ export default async function handler(
       [username, hashedPassword, 'Viewer']
     );
 
-    res.status(201).send('User created successfully.');
+    res.status(201).json({ message: 'User created successfully.' });
   } catch (error) {
     console.error('Signup error:', error);
-    res.status(500).send('An error occurred on the server while trying to sign up.');
+    res.status(500).json({ message: 'An error occurred on the server while trying to sign up.' });
   }
 }

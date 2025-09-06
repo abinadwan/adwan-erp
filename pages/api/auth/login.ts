@@ -28,7 +28,7 @@ export default async function handler(
   const { username, password } = req.body;
 
   if (!username || !password) {
-    return res.status(400).send('Please enter username and password.');
+    return res.status(400).json({ message: 'Please enter username and password.' });
   }
 
   try {
@@ -38,14 +38,14 @@ export default async function handler(
     );
 
     if (rows.length === 0) {
-      return res.status(401).send('Incorrect username or password.');
+      return res.status(401).json({ message: 'Incorrect username or password.' });
     }
 
     const user = rows[0];
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
-      return res.status(401).send('Incorrect username or password.');
+      return res.status(401).json({ message: 'Incorrect username or password.' });
     }
 
     const token = jwt.sign({ id: user.id, username: user.username, role: user.role || 'Viewer' }, JWT_SECRET, {
@@ -62,6 +62,6 @@ export default async function handler(
     res.status(200).json({ message: 'Login successful' });
   } catch (error) {
     console.error('Login error:', error);
-    res.status(500).send('An error occurred on the server while trying to log in.');
+    res.status(500).json({ message: 'An error occurred on the server while trying to log in.' });
   }
 }

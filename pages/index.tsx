@@ -2,6 +2,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { parseCookies } from 'nookies';
 import type { GetServerSidePropsContext } from 'next';
+import jwt from 'jsonwebtoken';
+
 
 export default function Dashboard() {
   const router = useRouter();
@@ -79,7 +81,19 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     };
   }
 
-  // You can verify the token here if you want
+  try {
+    // It's best to move the JWT_SECRET to a shared config/util file
+    const JWT_SECRET = process.env.JWT_SECRET;
+    if (!JWT_SECRET) throw new Error("JWT_SECRET not configured on the server.");
+    jwt.verify(token, JWT_SECRET);
+  } catch (error) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      },
+    };
+  }
 
   return {
     props: {},

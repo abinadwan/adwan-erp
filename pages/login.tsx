@@ -24,12 +24,12 @@ export default function LoginPage() {
       if (response.ok) {
         router.push('/');
       } else {
-        const message = await response.text();
-        setError(message);
+        const data = await response.json();
+        setError(data.message || 'Login failed.');
       }
     } catch (err) {
       console.error(err);
-      setError('An unexpected error occurred.');
+      setError('An unexpected error occurred. Please try again.');
     }
   };
 
