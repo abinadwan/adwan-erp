@@ -1,8 +1,20 @@
 const express = require('express');
+const session = require('express-session');
 const bcrypt = require('bcryptjs');
-const db = require('./db'); // المسار الصحيح إلى db.js
+const db = require('./db');
 
+const app = express();
 const router = express.Router();
+
+app.use(express.json());
+app.use(session({
+    secret: 'your-secret-key', // استبدل هذا بمفتاح سري آمن
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false } // في الإنتاج، يجب تعيين هذا إلى true مع HTTPS
+}));
+
+app.use(express.static(__dirname));
 
 router.post('/signup', async (req, res) => {
     const { username, password } = req.body;
@@ -12,17 +24,14 @@ router.post('/signup', async (req, res) => {
     }
 
     try {
-        // Check if user already exists
         const [rows] = await db.execute('SELECT * FROM users WHERE username = ?', [username]);
 
         if (rows.length > 0) {
             return res.status(400).send('Username already exists.');
         }
 
-        // Hash the password
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        // Insert the new user
         await db.execute('INSERT INTO users (username, password) VALUES (?, ?)', [username, hashedPassword]);
 
         res.status(201).send('User created successfully.');
@@ -41,34 +50,25 @@ router.post('/login', async (req, res) => {
     }
 
     try {
-        // 1. Find the user by name from the database
         const [rows] = await db.execute('SELECT * FROM users WHERE username = ?', [username]);
 
         if (rows.length === 0) {
-            // User not found
             return res.status(401).send('Incorrect username or password.');
         }
 
         const user = rows[0];
-
-        // 2. Compare the submitted password with the hashed password in the database
         const isMatch = await bcrypt.compare(password, user.password);
 
         if (!isMatch) {
-            // Passwords do not match
             return res.status(401).send('Incorrect username or password.');
         }
 
-        // 3. If the credentials are correct, create a session for the user
         req.session.user = {
             id: user.id,
             username: user.username,
-            // Add any other user data you want to store in the session
         };
         
-        // 4. Redirect the user to a protected page such as the dashboard
-        // You can also send a success response in JSON format
-        res.redirect('/dashboard');
+        res.status(200).send('Login successful');
 
     } catch (error) {
         console.error('Login error:', error);
@@ -79,11 +79,37 @@ router.post('/login', async (req, res) => {
 router.get('/logout', (req, res) => {
     req.session.destroy(err => {
         if (err) {
-            return res.redirect('/dashboard'); // أو أي صفحة أخرى
+            return res.redirect('/index.html');
         }
-        res.clearCookie('connect.sid'); // اسم ملف تعريف الارتباط الافتراضي للجلسة
-        res.redirect('/login');
+        res.clearCookie('connect.sid');
+        res.redirect('/login.html');
     });
 });
 
-module.exports = router;
+app.use('/api/auth', router);
+
+// Middleware to protect routes
+function checkAuth(req, res, next) {
+    if (req.session.user) {
+        next();
+    } else {
+        res.redirect('/login.html');
+    }
+}
+
+// Apply middleware to all routes except login and signup
+app.use((req, res, next) => {
+    if (req.path === '/login.html' || req.path === '/signup.html' || req.path.startsWith('/api/auth')) {
+        return next();
+    }
+    checkAuth(req, res, next);
+});
+
+app.get('/', (req, res) => {
+    res.redirect('/index.html');
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
