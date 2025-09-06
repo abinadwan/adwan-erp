@@ -4,30 +4,58 @@ document.addEventListener('DOMContentLoaded', () => {
   const data = loadData();
   const empCtx = document.getElementById('empChart').getContext('2d');
   const leaveCtx = document.getElementById('leaveChart').getContext('2d');
-
-  function drawBar(ctx, labels, values) {
-    const width = ctx.canvas.width;
-    const height = ctx.canvas.height;
-    const max = Math.max(...values, 1);
-    const barWidth = width / labels.length;
-    ctx.clearRect(0,0,width,height);
-    labels.forEach((label,i) => {
-      const barHeight = (values[i]/max)*(height-20);
-      ctx.fillStyle = '#3b82f6';
-      ctx.fillRect(i*barWidth + 10, height - barHeight - 20, barWidth - 20, barHeight);
-      ctx.fillStyle = '#000';
-      ctx.fillText(label, i*barWidth + 10, height - 5);
-    });
-  }
-
+  
+  // Employees per Department Chart
   const empCounts = {};
   data.employees.forEach(e => {
-    const dept = data.departments.find(d => d.id === e.departmentId)?.name || '';
+    const dept = data.departments.find(d => d.id === e.departmentId)?.name || 'N/A';
     empCounts[dept] = (empCounts[dept] || 0) + 1;
   });
-  drawBar(empCtx, Object.keys(empCounts), Object.values(empCounts));
 
+  new Chart(empCtx, {
+    type: 'bar',
+    data: {
+      labels: Object.keys(empCounts),
+      datasets: [{
+        label: t('employees'),
+        data: Object.values(empCounts),
+        backgroundColor: 'rgba(59, 130, 246, 0.5)',
+        borderColor: 'rgba(59, 130, 246, 1)',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: { stepSize: 1 }
+        }
+      }
+    }
+  });
+
+  // Leave Status Chart
   const leaveCounts = { Pending: 0, Approved: 0, Rejected: 0 };
-  data.leaves.forEach(l => { leaveCounts[l.status] = (leaveCounts[l.status] || 0) + 1; });
-  drawBar(leaveCtx, Object.keys(leaveCounts), Object.values(leaveCounts));
+  data.leaves.forEach(l => { 
+      if (leaveCounts.hasOwnProperty(l.status)) {
+          leaveCounts[l.status]++;
+      }
+  });
+
+  new Chart(leaveCtx, {
+    type: 'doughnut',
+    data: {
+      labels: Object.keys(leaveCounts).map(k => t(k.toLowerCase())),
+      datasets: [{
+        label: t('leaves'),
+        data: Object.values(leaveCounts),
+        backgroundColor: [
+          'rgba(255, 159, 64, 0.5)', // Pending
+          'rgba(75, 192, 192, 0.5)', // Approved
+          'rgba(255, 99, 132, 0.5)'  // Rejected
+        ],
+        borderWidth: 1
+      }]
+    }
+  });
 });

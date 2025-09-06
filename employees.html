@@ -2,12 +2,14 @@
 <html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.tailwindcss.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none';" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.tailwindcss.com https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: blob:; font-src 'self' data: https://fonts.gstatic.com; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none';" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Employees</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <link rel="stylesheet" href="css/style.css" />
   <script defer src="js/app.js"></script>
+  <script defer src="js/crud-helpers.js"></script>
   <script defer src="js/employees.js"></script>
 </head>
 <body class="bg-gray-100" data-auth="required">
@@ -31,24 +33,44 @@
     </div>
   </header>
   <main class="p-4">
-    <div class="bg-white p-4 rounded shadow mb-4">
-      <form id="employeeForm" class="space-y-2">
-        <div>
-          <label for="empName" data-i18n="name" class="block"></label>
-          <input type="text" id="empName" class="border p-2 w-full" />
+    <!-- Modal for Add/Edit Employee -->
+    <div id="formModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full no-print z-10">
+      <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+        <div class="mt-3">
+          <h3 class="text-lg leading-6 font-medium text-gray-900 text-center" id="modalTitle"></h3>
+          <div class="mt-2 px-7 py-3">
+            <form id="employeeForm" class="space-y-2 text-left">
+              <input type="hidden" id="editId">
+              <div>
+                <label for="empName" data-i18n="name" class="block"></label>
+                <input type="text" id="empName" class="border p-2 w-full" required />
+              </div>
+              <div>
+                <label for="empEmail" data-i18n="email" class="block"></label>
+                <input type="email" id="empEmail" class="border p-2 w-full" required />
+              </div>
+              <div>
+                <label for="empDept" data-i18n="department" class="block"></label>
+                <select id="empDept" class="border p-2 w-full" required></select>
+              </div>
+            </form>
+          </div>
+          <div class="items-center px-4 py-3 space-y-2 sm:space-y-0 sm:flex sm:flex-row-reverse sm:space-x-2 sm:space-x-reverse">
+            <button id="saveButton" class="w-full sm:w-auto bg-blue-500 text-white px-4 py-2 rounded" data-i18n="save"></button>
+            <button id="closeModalButton" class="w-full sm:w-auto bg-gray-300 text-gray-800 px-4 py-2 rounded" data-i18n="cancel"></button>
+          </div>
         </div>
-        <div>
-          <label for="empEmail" data-i18n="email" class="block"></label>
-          <input type="email" id="empEmail" class="border p-2 w-full" />
-        </div>
-        <div>
-          <label for="empDept" data-i18n="department" class="block"></label>
-          <select id="empDept" class="border p-2 w-full"></select>
-        </div>
-        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded" data-i18n="save"></button>
-      </form>
+      </div>
     </div>
+
     <div class="bg-white p-4 rounded shadow mb-4">
+      <div class="flex justify-between items-center mb-4 no-print">
+        <div class="relative flex-grow">
+          <label for="searchInput" class="sr-only" data-i18n="search"></label>
+          <input type="text" id="searchInput" class="border p-2 w-full" data-i18n-placeholder="searchPlaceholderEmployees">
+        </div>
+        <button id="addEmployeeBtn" class="ml-4 bg-blue-500 text-white px-4 py-2 rounded self-end admin-only" data-i18n="add"></button>
+      </div>
       <div class="flex space-x-2 mb-2 no-print">
         <button id="export" class="allow-viewer bg-green-500 text-white px-2 py-1 rounded" data-i18n="export"></button>
         <button id="print" class="allow-viewer bg-gray-500 text-white px-2 py-1 rounded" data-i18n="print"></button>

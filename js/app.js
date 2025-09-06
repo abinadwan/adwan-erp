@@ -1,6 +1,16 @@
-const HRMS_KEY = 'hrmsData';
 const SESSION_KEY = 'hrmsSession';
 const LANG_KEY = 'hrmsLang';
+
+// --- Supabase Client Setup ---
+// هام: استبدل بالـ URL والـ Key الخاص بمشروعك على Supabase
+const SUPABASE_URL = 'YOUR_SUPABASE_URL';
+const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+
+// تحقق من أن القيم قد تم تغييرها
+if (SUPABASE_URL === 'YOUR_SUPABASE_URL' || SUPABASE_ANON_KEY === 'YOUR_SUPABASE_ANON_KEY') {
+  alert('Please update SUPABASE_URL and SUPABASE_ANON_KEY in js/app.js');
+}
+const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 const translations = {
   en: {
@@ -51,9 +61,12 @@ const translations = {
     kpiLeaves: 'Pending Leaves',
     latestAudit: 'Latest Audit',
     quickActions: 'Quick Actions',
+    search: 'Search',
+    searchPlaceholderEmployees: 'Search by name, email, or department...',
     save: 'Save',
     approve: 'Approve',
-    reject: 'Reject'
+    reject: 'Reject',
+    cancel: 'Cancel'
   },
   ar: {
     loginTitle: 'تسجيل الدخول',
@@ -103,9 +116,12 @@ const translations = {
     kpiLeaves: 'إجازات معلقة',
     latestAudit: 'أحدث السجلات',
     quickActions: 'إجراءات سريعة',
+    search: 'بحث',
+    searchPlaceholderEmployees: 'بحث بالاسم، البريد الإلكتروني، أو القسم...',
     save: 'حفظ',
     approve: 'موافقة',
-    reject: 'رفض'
+    reject: 'رفض',
+    cancel: 'إلغاء'
   }
 };
 
@@ -117,45 +133,22 @@ function validateEmail(email) {
   return /^[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}$/.test(email);
 }
 
-function loadData() {
-  return JSON.parse(localStorage.getItem(HRMS_KEY));
+async function addAudit(action, entity, detail) {
+  const { error } = await supabase
+    .from('audit')
+    .insert([{ action, entity, detail, time: new Date().toISOString() }]);
+  if (error) console.error('Error adding audit:', error);
 }
 
-function saveData(data) {
-  localStorage.setItem(HRMS_KEY, JSON.stringify(data));
-}
+async function exportCSV(entity) {
+  const { data, error } = await supabase.from(entity).select();
 
-function seedData() {
-  if (!localStorage.getItem(HRMS_KEY)) {
-    const data = {
-      pins: { Admin: '0000', Viewer: '1111' },
-      departments: [
-        { id: 1, name: 'HR' },
-        { id: 2, name: 'IT' }
-      ],
-      employees: [
-        { id: 1, name: 'Alice', email: 'alice@example.com', departmentId: 1 },
-        { id: 2, name: 'Bob', email: 'bob@example.com', departmentId: 2 }
-      ],
-      attendance: [],
-      leaves: [
-        { id: 1, employeeId: 1, start: '2024-02-01', end: '2024-02-03', status: 'Pending' }
-      ],
-      payroll: [],
-      audit: []
-    };
-    saveData(data);
+  if (error) {
+    console.error(`Error fetching ${entity} for CSV export:`, error);
+    alert(`Could not export ${entity}.`);
+    return;
   }
-}
 
-function addAudit(action, entity, detail) {
-  const data = loadData();
-  data.audit.unshift({ id: Date.now(), action, entity, detail, time: new Date().toISOString() });
-  saveData(data);
-}
-
-function exportCSV(entity) {
-  const data = loadData()[entity];
   let csv = '';
   if (data.length) {
     const headers = Object.keys(data[0]);
@@ -174,7 +167,9 @@ function exportCSV(entity) {
 }
 
 function setSession(role) {
-  localStorage.setItem(SESSION_KEY, JSON.stringify({ role, expires: Date.now() + 30 * 60 * 1000 }));
+  // In a real Supabase app, you would store the JWT session.
+  // For now, we'll keep the simple role session.
+  localStorage.setItem(SESSION_KEY, JSON.stringify({ role, expires: Date.now() + 60 * 60 * 1000 }));
 }
 
 function getSession() {
@@ -224,6 +219,9 @@ function applyTranslations() {
   document.querySelectorAll('[data-i18n]').forEach(el => {
     el.textContent = t(el.dataset.i18n);
   });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    el.placeholder = t(el.dataset.i18nPlaceholder);
+  });
 }
 
 function setupRoleUI(session) {
@@ -241,8 +239,7 @@ function setupRoleUI(session) {
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  seedData();
+document.addEventListener('DOMContentLoaded', async () => {
   const session = getSession();
   if (document.body.dataset.auth === 'required') {
     const s = requireSession();
