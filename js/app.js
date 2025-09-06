@@ -20,8 +20,8 @@ window.supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 const translations = {
   en: {
     loginTitle: 'Login',
-    role: 'Role',
-    pin: 'PIN',
+    username: 'Username',
+    password: 'Password',
     submit: 'Submit',
     dashboard: 'Dashboard',
     employees: 'Employees',
@@ -33,6 +33,7 @@ const translations = {
     reports: 'Reports',
     settings: 'Settings',
     logout: 'Logout',
+    invalidCredentials: 'Invalid username or password',
     invalidPin: 'Invalid PIN',
     invalidEmail: 'Invalid email',
     add: 'Add',
@@ -75,8 +76,8 @@ const translations = {
   },
   ar: {
     loginTitle: 'تسجيل الدخول',
-    role: 'الدور',
-    pin: 'الرمز',
+    username: 'اسم المستخدم',
+    password: 'كلمة المرور',
     submit: 'إرسال',
     dashboard: 'لوحة التحكم',
     employees: 'الموظفون',
@@ -88,6 +89,7 @@ const translations = {
     reports: 'التقارير',
     settings: 'الإعدادات',
     logout: 'خروج',
+    invalidCredentials: 'اسم المستخدم أو كلمة المرور غير صحيحة',
     invalidPin: 'رمز غير صحيح',
     invalidEmail: 'بريد غير صالح',
     add: 'إضافة',
