@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+// middleware.js
 
 export function middleware(req) {
   try {
@@ -15,13 +15,24 @@ export function middleware(req) {
       "frame-ancestors 'none'",
     ].join('; ');
 
-    const res = NextResponse.next();
+    // إنشاء استجابة جديدة بناءً على الطلب الأصلي
+    const res = new Response(req.body, {
+      status: 200,
+      headers: new Headers(req.headers),
+    });
+
+    // تعيين رؤوس الأمان
     res.headers.set('Content-Security-Policy', csp);
     res.headers.set('x-nonce', nonce);
+
     return res;
   } catch (err) {
     console.error('middleware error', err);
-    return NextResponse.next();
+    // في حالة الخطأ، نعيد استجابة جديدة بدون تعديل
+    return new Response(req.body, {
+      status: 200,
+      headers: new Headers(req.headers),
+    });
   }
 }
 
