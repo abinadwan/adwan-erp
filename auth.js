@@ -1,8 +1,40 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
-const db = require('../db'); // تأكد من أن المسار إلى db.js صحيح
+const db = require('./db'); // تم تصحيح المسار
 
 const router = express.Router();
+
+// مسار تسجيل مستخدم جديد
+router.post('/register', async (req, res) => {
+    const { username, password } = req.body;
+
+    if (!username || !password) {
+        return res.status(400).send('الرجاء إدخال اسم المستخدم وكلمة المرور.');
+    }
+
+    try {
+        // 1. تجزئة (hashing) كلمة المرور قبل حفظها
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+
+        // 2. حفظ المستخدم الجديد في قاعدة البيانات
+        await db.query(
+            'INSERT INTO users (username, password) VALUES ($1, $2)',
+            [username, hashedPassword]
+        );
+
+        // 3. إعادة توجيه المستخدم إلى صفحة تسجيل الدخول بعد التسجيل الناجح
+        res.redirect('/login');
+
+    } catch (error) {
+        console.error('Registration error:', error);
+        // التحقق مما إذا كان الخطأ بسبب اسم مستخدم موجود مسبقًا
+        if (error.code === '23505') { // 23505 هو رمز خطأ PostgreSQL لتكرار القيمة الفريدة
+            return res.status(409).send('اسم المستخدم هذا موجود بالفعل.');
+        }
+        res.status(500).send('حدث خطأ في الخادم أثناء محاولة تسجيل المستخدم.');
+    }
+});
 
 router.post('/login', async (req, res) => {
     const { username, password } = req.body;
@@ -13,7 +45,8 @@ router.post('/login', async (req, res) => {
 
     try {
         // 1. ابحث عن المستخدم بالاسم من قاعدة البيانات
-        const [rows] = await db.execute('SELECT * FROM users WHERE username = ?', [username]);
+        // ملاحظة: تم تحديث بناء جملة الاستعلام لـ PostgreSQL (استخدام $1)
+        const { rows } = await db.query('SELECT * FROM users WHERE username = $1', [username]);
 
         if (rows.length === 0) {
             // لم يتم العثور على المستخدم
