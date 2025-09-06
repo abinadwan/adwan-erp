@@ -1,10 +1,15 @@
 const bcrypt = require('bcryptjs');
 const pool = require('./db'); // استيراد إعدادات الاتصال بقاعدة البيانات
 
+/**
+ * يقوم هذا السكربت بإنشاء مستخدم إداري في قاعدة البيانات.
+ * يقرأ اسم المستخدم وكلمة المرور والصلاحية من متغيرات البيئة (process.env) لمزيد من الأمان.
+ * يستخدم قيمًا افتراضية إذا لم يتم توفير متغيرات البيئة.
+ */
 async function createAdminUser() {
-    const username = 'admin';
-    const plainPassword = '123456';
-    const role = 'admin';
+    const username = process.env.ADMIN_USER || 'admin';
+    const plainPassword = process.env.ADMIN_PASS || '123456';
+    const role = process.env.ADMIN_ROLE || 'admin';
 
     console.log('بدء إعداد حساب مدير النظام...');
 
