@@ -17,13 +17,6 @@ export default async function handler(
   }
 
   try {
-# adwan-erp-nextjs/.env.local
-
-# الصق الـ URI الذي نسخته من Supabase هنا
-DATABASE_URL="postgres://postgres:[YOUR-PASSWORD]@[HOST]:[PORT]/postgres"
-
-# أنشئ مفتاحًا سريًا قويًا وعشوائيًا لـ JWT
-JWT_SECRET="your-super-strong-and-secret-jwt-key"
     const { rows }: any = await pool.query(
       'SELECT id FROM users WHERE username = $1',
       [username]
@@ -36,8 +29,8 @@ JWT_SECRET="your-super-strong-and-secret-jwt-key"
     const hashedPassword = await bcrypt.hash(password, 10);
 
     await pool.query(
-      'INSERT INTO users (username, password, role) VALUES ($1, $2, $3)',
-      [username, hashedPassword]
+      'INSERT INTO users (username, password, role) VALUES ($1, $2, $3)', // New users get 'Viewer' role by default
+      [username, hashedPassword, 'Viewer']
     );
 
     res.status(201).send('User created successfully.');
