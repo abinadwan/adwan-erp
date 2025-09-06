@@ -53,7 +53,7 @@ function createTableRenderer({ tableBodyId, columns, getActions, getDataSource }
     });
 
     // Apply role-based UI restrictions to newly created elements
-    const session = getSession();
+    const session = await getSession();
     if (session) {
         setupRoleUI(session);
     }
