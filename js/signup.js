@@ -33,8 +33,9 @@ document.addEventListener('DOMContentLoaded', () => {
       messageEl.textContent = t('signupFailed') + ': ' + error.message;
       messageEl.classList.add('text-red-600');
     } else {
-      // Check if email confirmation is required by Supabase
-      const needsConfirmation = data.user && data.user.identities && data.user.identities.length > 0;
+      // Check if email confirmation is required by checking if the email_confirmed_at field is set.
+      // If it's not set, confirmation is needed.
+      const needsConfirmation = data.user && !data.user.email_confirmed_at;
       messageEl.textContent = needsConfirmation ? t('signupSuccess') : t('signupSuccessNoConfirmation');
       messageEl.classList.add('text-green-600');
       form.classList.add('hidden');
