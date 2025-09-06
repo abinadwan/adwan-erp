@@ -20,7 +20,8 @@ document.addEventListener('DOMContentLoaded', () => {
       email: email,
       options: {
         // This will be the page the user is redirected to after clicking the link.
-        emailRedirectTo: `${window.location.origin}/index.html`,
+        // Using this logic ensures it works correctly even in subdirectories (like on GitHub Pages).
+        emailRedirectTo: `${window.location.origin}${window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/'))}/index.html`,
       },
     });
 
@@ -28,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
       console.error('Magic link error:', error);
     }
     // Always show a success message to prevent leaking information about which emails are registered.
-    messageEl.textContent = t('checkEmailForLink');
+    messageEl.textContent = t('checkEmailForMagicLink');
     messageEl.classList.add('text-green-600');
     form.querySelector('button').disabled = true;
   });

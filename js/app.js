@@ -85,6 +85,8 @@ const translations = {
     resetPasswordInstructions: 'Enter your email to receive a password reset link.',
     sendResetLink: 'Send Link',
     checkEmailForLink: 'If an account exists for this email, a password reset link has been sent.',
+    sendMagicLink: 'Send Magic Link',
+    checkEmailForMagicLink: 'If an account with this email exists, a login link has been sent.',
     updatePassword: 'Update Password',
     passwordUpdatedRedirect: 'Password updated successfully. Redirecting to login...',
     backToLogin: 'Back to Login'
@@ -156,6 +158,8 @@ const translations = {
     resetPasswordInstructions: 'أدخل بريدك الإلكتروني لتصلك رسالة إعادة تعيين كلمة المرور.',
     sendResetLink: 'إرسال الرابط',
     checkEmailForLink: 'إذا كان هناك حساب مرتبط بهذا البريد، فقد تم إرسال رابط إعادة التعيين.',
+    sendMagicLink: 'إرسال رابط الدخول',
+    checkEmailForMagicLink: 'إذا كان هناك حساب مرتبط بهذا البريد، فقد تم إرسال رابط الدخول.',
     updatePassword: 'تحديث كلمة المرور',
     passwordUpdatedRedirect: 'تم تحديث كلمة المرور بنجاح. جارٍ التوجيه إلى صفحة الدخول...',
     backToLogin: 'العودة لتسجيل الدخول'
