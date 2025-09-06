@@ -199,7 +199,7 @@ function logout() {
 }
 
 function currentLang() {
-  return localStorage.getItem(LANG_KEY) || 'ar';
+  return localStorage.getItem(LANG_KEY) || 'en';
 }
 
 function setLang(lang) {
