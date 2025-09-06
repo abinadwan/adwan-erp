@@ -67,7 +67,7 @@ router.post('/login', async (req, res) => {
         req.session.user = {
             id: user.id,
             username: user.username,
-            // أضف أي بيانات أخرى للمستخدم تريد تخزينها في الجلسة
+            role: user.role // إضافة صلاحية المستخدم إلى الجلسة
         };
         
         // 4. أعد توجيه المستخدم إلى صفحة محمية مثل لوحة التحكم
