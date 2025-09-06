@@ -32,32 +32,18 @@
     </div>
   </header>
   <main class="p-4">
-    <div class="bg-white p-4 rounded shadow mb-4" id="adminPinFormContainer">
-      <h2 data-i18n="changePin" class="mb-2"></h2>
-      <form id="adminPinForm" class="space-y-2">
+    <div class="bg-white p-4 rounded shadow mb-4 max-w-md mx-auto">
+      <h2 data-i18n="changePassword" class="text-xl font-bold mb-4"></h2>
+      <form id="passwordForm" class="space-y-4">
         <div>
-          <label for="adminCurrent" data-i18n="currentPin" class="block"></label>
-          <input type="password" id="adminCurrent" class="border p-2 w-full" />
+          <label for="newPassword" data-i18n="newPassword" class="block"></label>
+          <input type="password" id="newPassword" class="border p-2 w-full" required minlength="6" />
         </div>
         <div>
-          <label for="adminNew" data-i18n="newPin" class="block"></label>
-          <input type="password" id="adminNew" class="border p-2 w-full" />
+          <label for="confirmPassword" data-i18n="confirmPassword" class="block"></label>
+          <input type="password" id="confirmPassword" class="border p-2 w-full" required />
         </div>
-        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded allow-viewer" data-i18n="save"></button>
-      </form>
-    </div>
-    <div class="bg-white p-4 rounded shadow" id="viewerPinFormContainer">
-      <h2 data-i18n="changePin" class="mb-2"></h2>
-      <form id="viewerPinForm" class="space-y-2">
-        <div>
-          <label for="viewerCurrent" data-i18n="currentPin" class="block"></label>
-          <input type="password" id="viewerCurrent" class="border p-2 w-full allow-viewer" />
-        </div>
-        <div>
-          <label for="viewerNew" data-i18n="newPin" class="block"></label>
-          <input type="password" id="viewerNew" class="border p-2 w-full allow-viewer" />
-        </div>
-        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded allow-viewer" data-i18n="save"></button>
+        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded" data-i18n="save"></button>
       </form>
     </div>
   </main>

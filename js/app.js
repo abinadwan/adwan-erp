@@ -72,7 +72,15 @@ const translations = {
     save: 'Save',
     approve: 'Approve',
     reject: 'Reject',
-    cancel: 'Cancel'
+    cancel: 'Cancel',
+    confirmDelete: 'Are you sure you want to delete this item?',
+    changePassword: 'Change Password',
+    newPassword: 'New Password',
+    confirmPassword: 'Confirm New Password',
+    passwordTooShort: 'Password must be at least 6 characters long.',
+    passwordsDoNotMatch: 'Passwords do not match.',
+    passwordUpdateFailed: 'Failed to update password.',
+    passwordUpdateSuccess: 'Password updated successfully!'
   },
   ar: {
     loginTitle: 'تسجيل الدخول',
@@ -128,7 +136,15 @@ const translations = {
     save: 'حفظ',
     approve: 'موافقة',
     reject: 'رفض',
-    cancel: 'إلغاء'
+    cancel: 'إلغاء',
+    confirmDelete: 'هل أنت متأكد من حذف هذا العنصر؟',
+    changePassword: 'تغيير كلمة المرور',
+    newPassword: 'كلمة المرور الجديدة',
+    confirmPassword: 'تأكيد كلمة المرور الجديدة',
+    passwordTooShort: 'يجب أن تتكون كلمة المرور من 6 أحرف على الأقل.',
+    passwordsDoNotMatch: 'كلمتا المرور غير متطابقتين.',
+    passwordUpdateFailed: 'فشل تحديث كلمة المرور.',
+    passwordUpdateSuccess: 'تم تحديث كلمة المرور بنجاح!'
   }
 };
 

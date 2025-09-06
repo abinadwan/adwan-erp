@@ -1,41 +1,36 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const session = requireSession();
+document.addEventListener('DOMContentLoaded', async () => {
+  const session = await requireSession();
   if (!session) return;
-  const data = loadData();
-  const adminForm = document.getElementById('adminPinForm');
-  const viewerForm = document.getElementById('viewerPinForm');
 
-  if (session.role !== 'Admin') {
-    adminForm.remove();
-  }
+  const form = document.getElementById('passwordForm');
+  const newPasswordInput = document.getElementById('newPassword');
+  const confirmPasswordInput = document.getElementById('confirmPassword');
 
-  adminForm?.addEventListener('submit', e => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const current = sanitize(document.getElementById('adminCurrent').value);
-    const newPin = sanitize(document.getElementById('adminNew').value);
-    if (current === data.pins.Admin) {
-      data.pins.Admin = newPin;
-      saveData(data);
-      addAudit('update','pin','Admin');
-      alert(t('save'));
-    } else {
-      alert(t('invalidPin'));
-    }
-    adminForm.reset();
-  });
 
-  viewerForm.addEventListener('submit', e => {
-    e.preventDefault();
-    const current = sanitize(document.getElementById('viewerCurrent').value);
-    const newPin = sanitize(document.getElementById('viewerNew').value);
-    if (current === data.pins.Viewer) {
-      data.pins.Viewer = newPin;
-      saveData(data);
-      addAudit('update','pin','Viewer');
-      alert(t('save'));
-    } else {
-      alert(t('invalidPin'));
+    const newPassword = newPasswordInput.value;
+    const confirmPassword = confirmPasswordInput.value;
+
+    if (newPassword.length < 6) {
+      alert(t('passwordTooShort') || 'Password must be at least 6 characters long.');
+      return;
     }
-    viewerForm.reset();
+
+    if (newPassword !== confirmPassword) {
+      alert(t('passwordsDoNotMatch') || 'Passwords do not match.');
+      return;
+    }
+
+    const { data, error } = await supabase.auth.updateUser({ password: newPassword });
+
+    if (error) {
+      console.error('Error updating password:', error);
+      alert(t('passwordUpdateFailed') || 'Failed to update password: ' + error.message);
+    } else {
+      alert(t('passwordUpdateSuccess') || 'Password updated successfully!');
+      form.reset();
+      addAudit('update', 'password', data.user.email);
+    }
   });
 });
