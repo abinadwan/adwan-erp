@@ -80,16 +80,12 @@ const translations = {
     passwordsDoNotMatch: 'Passwords do not match.',
     passwordUpdateFailed: 'Failed to update password.',
     passwordUpdateSuccess: 'Password updated successfully!',
-    forgotPassword: 'Forgot Password?',
-    resetPassword: 'Reset Password',
-    resetPasswordInstructions: 'Enter your email to receive a password reset link.',
-    sendResetLink: 'Send Link',
-    checkEmailForLink: 'If an account exists for this email, a password reset link has been sent.',
-    sendMagicLink: 'Send Magic Link',
-    checkEmailForMagicLink: 'If an account with this email exists, a login link has been sent.',
-    updatePassword: 'Update Password',
-    passwordUpdatedRedirect: 'Password updated successfully. Redirecting to login...',
-    backToLogin: 'Back to Login'
+    signupTitle: 'Create New Account',
+    signupSuccess: 'Account created! Please check your email for a confirmation link to activate your account.',
+    signupSuccessNoConfirmation: 'Account created successfully! You can now log in.',
+    signupFailed: 'Failed to create account',
+    haveAccount: 'Already have an account? Login',
+    createNewAccount: 'Create a new account'
   },
   ar: {
     loginTitle: 'تسجيل الدخول',
@@ -153,16 +149,12 @@ const translations = {
     passwordsDoNotMatch: 'كلمتا المرور غير متطابقتين.',
     passwordUpdateFailed: 'فشل تحديث كلمة المرور.',
     passwordUpdateSuccess: 'تم تحديث كلمة المرور بنجاح!',
-    forgotPassword: 'هل نسيت كلمة المرور؟',
-    resetPassword: 'إعادة تعيين كلمة المرور',
-    resetPasswordInstructions: 'أدخل بريدك الإلكتروني لتصلك رسالة إعادة تعيين كلمة المرور.',
-    sendResetLink: 'إرسال الرابط',
-    checkEmailForLink: 'إذا كان هناك حساب مرتبط بهذا البريد، فقد تم إرسال رابط إعادة التعيين.',
-    sendMagicLink: 'إرسال رابط الدخول',
-    checkEmailForMagicLink: 'إذا كان هناك حساب مرتبط بهذا البريد، فقد تم إرسال رابط الدخول.',
-    updatePassword: 'تحديث كلمة المرور',
-    passwordUpdatedRedirect: 'تم تحديث كلمة المرور بنجاح. جارٍ التوجيه إلى صفحة الدخول...',
-    backToLogin: 'العودة لتسجيل الدخول'
+    signupTitle: 'إنشاء حساب جديد',
+    signupSuccess: 'تم إنشاء الحساب! يرجى التحقق من بريدك الإلكتروني لتفعيل حسابك.',
+    signupSuccessNoConfirmation: 'تم إنشاء الحساب بنجاح! يمكنك الآن تسجيل الدخول.',
+    signupFailed: 'فشل إنشاء الحساب',
+    haveAccount: 'لديك حساب بالفعل؟ تسجيل الدخول',
+    createNewAccount: 'إنشاء حساب جديد'
   }
 };
 

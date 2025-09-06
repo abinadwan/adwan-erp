@@ -1,36 +1,22 @@
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('loginForm');
-  const messageEl = document.getElementById('message');
-
-  // This listener handles the session when the user clicks the magic link and returns to the app.
-  supabase.auth.onAuthStateChange(async (event, session) => {
-    // If the user is signed in and the event is SIGNED_IN, it means they came from the magic link.
-    if (event === 'SIGNED_IN' && session) {
-      addAudit('login', 'user', session.user.email);
-      window.location.href = 'index.html';
-    }
-  });
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    messageEl.textContent = ''; // Clear previous messages
     const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
 
-    const { error } = await supabase.auth.signInWithOtp({
+    const { error } = await supabase.auth.signInWithPassword({
       email: email,
-      options: {
-        // This will be the page the user is redirected to after clicking the link.
-        // Using this logic ensures it works correctly even in subdirectories (like on GitHub Pages).
-        emailRedirectTo: `${window.location.origin}${window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/'))}/index.html`,
-      },
+      password: password,
     });
 
     if (error) {
-      console.error('Magic link error:', error);
+      alert(t('invalidCredentials'));
+      return;
     }
-    // Always show a success message to prevent leaking information about which emails are registered.
-    messageEl.textContent = t('checkEmailForMagicLink');
-    messageEl.classList.add('text-green-600');
-    form.querySelector('button').disabled = true;
+
+    addAudit('login', 'user', email);
+    window.location.href = 'index.html';
   });
 });
