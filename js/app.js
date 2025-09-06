@@ -73,14 +73,21 @@ const translations = {
     approve: 'Approve',
     reject: 'Reject',
     cancel: 'Cancel',
-    confirmDelete: 'Are you sure you want to delete this item?',
     changePassword: 'Change Password',
     newPassword: 'New Password',
     confirmPassword: 'Confirm New Password',
     passwordTooShort: 'Password must be at least 6 characters long.',
     passwordsDoNotMatch: 'Passwords do not match.',
     passwordUpdateFailed: 'Failed to update password.',
-    passwordUpdateSuccess: 'Password updated successfully!'
+    passwordUpdateSuccess: 'Password updated successfully!',
+    forgotPassword: 'Forgot Password?',
+    resetPassword: 'Reset Password',
+    resetPasswordInstructions: 'Enter your email to receive a password reset link.',
+    sendResetLink: 'Send Reset Link',
+    checkEmailForLink: 'If an account exists for this email, a password reset link has been sent.',
+    updatePassword: 'Update Password',
+    passwordUpdatedRedirect: 'Password updated successfully. Redirecting to login...',
+    backToLogin: 'Back to Login'
   },
   ar: {
     loginTitle: 'تسجيل الدخول',
@@ -137,14 +144,21 @@ const translations = {
     approve: 'موافقة',
     reject: 'رفض',
     cancel: 'إلغاء',
-    confirmDelete: 'هل أنت متأكد من حذف هذا العنصر؟',
     changePassword: 'تغيير كلمة المرور',
     newPassword: 'كلمة المرور الجديدة',
     confirmPassword: 'تأكيد كلمة المرور الجديدة',
     passwordTooShort: 'يجب أن تتكون كلمة المرور من 6 أحرف على الأقل.',
     passwordsDoNotMatch: 'كلمتا المرور غير متطابقتين.',
     passwordUpdateFailed: 'فشل تحديث كلمة المرور.',
-    passwordUpdateSuccess: 'تم تحديث كلمة المرور بنجاح!'
+    passwordUpdateSuccess: 'تم تحديث كلمة المرور بنجاح!',
+    forgotPassword: 'هل نسيت كلمة المرور؟',
+    resetPassword: 'إعادة تعيين كلمة المرور',
+    resetPasswordInstructions: 'أدخل بريدك الإلكتروني لتصلك رسالة إعادة تعيين كلمة المرور.',
+    sendResetLink: 'إرسال رابط إعادة التعيين',
+    checkEmailForLink: 'إذا كان هناك حساب مرتبط بهذا البريد، فقد تم إرسال رابط إعادة التعيين.',
+    updatePassword: 'تحديث كلمة المرور',
+    passwordUpdatedRedirect: 'تم تحديث كلمة المرور بنجاح. جارٍ التوجيه إلى صفحة الدخول...',
+    backToLogin: 'العودة لتسجيل الدخول'
   }
 };
 
