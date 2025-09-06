@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', async () => {
-  const session = requireSession();
+  const session = await requireSession();
   if (!session) return;
 
   // --- Configuration for CRUD Helpers ---
