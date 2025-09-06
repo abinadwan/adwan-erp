@@ -25,8 +25,8 @@ export default async function handler(
   }
 
   try {
-    const [rows]: any = await pool.execute(
-      'SELECT * FROM users WHERE username = ?',
+    const { rows }: any = await pool.query(
+      'SELECT id, username, password, role FROM users WHERE username = $1',
       [username]
     );
 
@@ -41,7 +41,7 @@ export default async function handler(
       return res.status(401).send('Incorrect username or password.');
     }
 
-    const token = jwt.sign({ id: user.id, username: user.username }, JWT_SECRET, {
+    const token = jwt.sign({ id: user.id, username: user.username, role: user.role || 'Viewer' }, JWT_SECRET, {
       expiresIn: '1h',
     });
 

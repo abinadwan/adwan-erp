@@ -17,8 +17,15 @@ export default async function handler(
   }
 
   try {
-    const [rows]: any = await pool.execute(
-      'SELECT * FROM users WHERE username = ?',
+# adwan-erp-nextjs/.env.local
+
+# الصق الـ URI الذي نسخته من Supabase هنا
+DATABASE_URL="postgres://postgres:[YOUR-PASSWORD]@[HOST]:[PORT]/postgres"
+
+# أنشئ مفتاحًا سريًا قويًا وعشوائيًا لـ JWT
+JWT_SECRET="your-super-strong-and-secret-jwt-key"
+    const { rows }: any = await pool.query(
+      'SELECT id FROM users WHERE username = $1',
       [username]
     );
 
@@ -28,8 +35,8 @@ export default async function handler(
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    await pool.execute(
-      'INSERT INTO users (username, password) VALUES (?, ?)',
+    await pool.query(
+      'INSERT INTO users (username, password, role) VALUES ($1, $2, $3)',
       [username, hashedPassword]
     );
 

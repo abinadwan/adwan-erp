@@ -1,22 +1,13 @@
-import mysql from 'mysql2/promise';
+import { Pool } from 'pg';
 
-// Create a connection pool.
-// Replace the connection details with your actual database credentials.
-// It is recommended to use environment variables for this.
-// Create a .env.local file in the root of your project and add the following:
-// DB_HOST=localhost
-// DB_USER=root
-// DB_PASSWORD=password
-// DB_DATABASE=adwan_erp_db
-
-const pool = mysql.createPool({
-    host: process.env.DB_HOST || 'localhost',
-    user: process.env.DB_USER || 'root',
-    password: process.env.DB_PASSWORD || 'password',
-    database: process.env.DB_DATABASE || 'adwan_erp_db',
-    waitForConnections: true,
-    connectionLimit: 10,
-    queueLimit: 0
+// Supabase provides a single DATABASE_URL that contains all connection info.
+// It's the easiest way to connect.
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  // Supabase requires SSL.
+  ssl: {
+    rejectUnauthorized: false,
+  },
 });
 
 export default pool;
