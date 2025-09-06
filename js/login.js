@@ -1,14 +1,15 @@
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('loginForm');
-  // ملاحظة: هذا نظام دخول مؤقت.
-  // في تطبيق حقيقي، يجب استخدام نظام المصادقة الخاص بـ Supabase (مثلاً، بالبريد الإلكتروني وكلمة المرور).
-  // تم إزالة نظام PIN لأنه غير متوافق مع قاعدة البيانات.
-  form.addEventListener('submit', e => {
+  form.addEventListener('submit', async e => {
     e.preventDefault();
-    const role = document.getElementById('role').value;
-    // في هذا العرض التوضيحي، نقوم فقط بتعيين دور الجلسة والمتابعة.
-    setSession(role);
-    addAudit('login', role, `Logged in as ${role}`);
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value;
+    const { error } = await supabase.auth.signInWithPassword({ email: username, password });
+    if (error) {
+      alert(t('invalidCredentials'));
+      return;
+    }
+    addAudit('login', 'user', username);
     window.location.href = 'index.html';
   });
 });
