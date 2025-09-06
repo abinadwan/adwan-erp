@@ -3,20 +3,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const email = document.getElementById('email').value.trim();
+    const username = document.getElementById('username').value.trim();
     const password = document.getElementById('password').value;
 
-    const { error } = await supabase.auth.signInWithPassword({
-      email: email,
-      password: password,
+    const response = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ username, password }),
     });
 
-    if (error) {
-      alert(t('invalidCredentials'));
-      return;
+    if (response.ok) {
+      window.location.href = '/';
+    } else {
+      const message = await response.text();
+      alert(message);
     }
-
-    addAudit('login', 'user', email);
-    window.location.href = 'index.html';
   });
 });

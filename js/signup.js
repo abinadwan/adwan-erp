@@ -7,41 +7,38 @@ document.addEventListener('DOMContentLoaded', () => {
     messageEl.textContent = '';
     messageEl.className = 'mb-4 text-sm'; // Reset classes
 
-    const email = document.getElementById('email').value.trim();
+    const username = document.getElementById('username').value.trim();
     const password = document.getElementById('password').value;
     const confirmPassword = document.getElementById('confirmPassword').value;
 
     if (password.length < 6) {
-      messageEl.textContent = t('passwordTooShort');
+      messageEl.textContent = 'Password must be at least 6 characters long.';
       messageEl.classList.add('text-red-600');
       return;
     }
 
     if (password !== confirmPassword) {
-      messageEl.textContent = t('passwordsDoNotMatch');
+      messageEl.textContent = 'Passwords do not match.';
       messageEl.classList.add('text-red-600');
       return;
     }
 
-    const { data, error } = await supabase.auth.signUp({
-      email: email,
-      password: password,
+    const response = await fetch('/api/auth/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ username, password }),
     });
 
-    if (error) {
-      console.error('Sign up error:', error);
-      messageEl.textContent = t('signupFailed') + ': ' + error.message;
-      messageEl.classList.add('text-red-600');
-    } else if (data.user) {
-      // Check if email confirmation is required by checking if the email_confirmed_at field is set
-      const needsConfirmation = !data.user.email_confirmed_at;
-      messageEl.textContent = needsConfirmation ? t('signupSuccess') : t('signupSuccessNoConfirmation');
+    const message = await response.text();
+
+    if (response.ok) {
+      messageEl.textContent = message;
       messageEl.classList.add('text-green-600');
       form.classList.add('hidden');
     } else {
-      // This case should not happen on a successful signup, but it's good practice to handle it.
-      console.error('Signup succeeded but no user data was returned.');
-      messageEl.textContent = t('signupFailed') + ': An unknown error occurred.';
+      messageEl.textContent = message;
       messageEl.classList.add('text-red-600');
     }
   });
