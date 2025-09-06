@@ -7,7 +7,7 @@ const SUPABASE_URL = 'https://aynpgugnfulnstcfhhqn.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF5bnBndWduZnVsbnN0Y2ZoaHFuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTcxNjczOTIsImV4cCI6MjA3Mjc0MzM5Mn0.k7DSq9r9O2Wx8HYZVX3oD3nLXx-SE74BhyXjIhkAX04';
 
 // تحقق من أن القيم قد تم تغييرها
-if (SUPABASE_URL === 'YOUR_SUPABASE_URL' || SUPABASE_ANON_KEY === 'YOUR_SUPABASE_ANON_KEY') {
+if (SUPABASE_URL === 'https://aynpgugnfulnstcfhhqn.supabase.co' || SUPABASE_ANON_KEY === 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF5bnBndWduZnVsbnN0Y2ZoaHFuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTcxNjczOTIsImV4cCI6MjA3Mjc0MzM5Mn0.k7DSq9r9O2Wx8HYZVX3oD3nLXx-SE74BhyXjIhkAX04') {
   alert('Please update SUPABASE_URL and SUPABASE_ANON_KEY in js/app.js');
 }
 const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
