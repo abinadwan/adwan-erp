@@ -41,15 +41,8 @@ export default async function handler(
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const { error: insertError } = await supabase
-      .from('users')
-      .insert([
-        {
-          username,
-          password: hashedPassword,
-          role: 'Viewer',
-        } satisfies Database['public']['Tables']['users']['Insert'],
-      ]);
+ ]);
+ main
 
     if (insertError) {
       throw insertError;
