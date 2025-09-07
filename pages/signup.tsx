@@ -32,12 +32,12 @@ export default function SignupPage() {
         body: JSON.stringify({ username, password }),
       });
 
-      const data = await response.text();
+      const data = await response.json();
 
       if (response.ok) {
-        setMessage(data);
+        setMessage(data.message);
       } else {
-        setError(data);
+        setError(data.message || 'An error occurred.');
       }
     } catch (err) {
       console.error(err);
