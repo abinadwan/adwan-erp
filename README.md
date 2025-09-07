@@ -41,6 +41,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/b
 
 ## قسم باللغة العربية
 
+
 ### فكرة المشروع
 
 نظام بسيط لتخطيط موارد المؤسسة (ERP) يوفّر صفحات لإدارة الأقسام والموظفين مع نظام تسجيل الدخول والتسجيل.
@@ -59,10 +60,17 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/b
 
 ### كيفية تشغيل التطبيق
 
+=======
+هذا المشروع مبني باستخدام إطار العمل Next.js لبناء تطبيقات ويب حديثة.
+ 
 لتشغيل خادم التطوير محليًا استخدم:
 
 ```bash
 npm run dev
 ```
 
+
 ثم افتح المتصفح على العنوان `http://localhost:3000` لمعاينة التطبيق.
+
+بعد ذلك افتح المتصفح على العنوان `http://localhost:3000` لمعاينة التطبيق.
+
