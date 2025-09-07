@@ -14,8 +14,8 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="bg-gray-100 min-h-screen">
-      <header className="bg-gray-800 text-white p-4 no-print">
+    <div className="bg-gray-100 dark:bg-gray-900 min-h-screen text-gray-800 dark:text-gray-100">
+      <header className="bg-gray-800 dark:bg-gray-950 text-white p-4 no-print">
         <div className="flex justify-between">
           <nav className="space-x-4">
             <Link href="/" className="mr-4">Dashboard</Link>
@@ -35,20 +35,20 @@ export default function Dashboard() {
       </header>
       <main className="p-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-          <div className="bg-white p-4 rounded shadow">
+          <div className="bg-white dark:bg-gray-800 p-4 rounded shadow">
             <div>Total Employees</div>
             <div className="text-2xl">125</div>
           </div>
-          <div className="bg-white p-4 rounded shadow">
+          <div className="bg-white dark:bg-gray-800 p-4 rounded shadow">
             <div>Total Departments</div>
             <div className="text-2xl">15</div>
           </div>
-          <div className="bg-white p-4 rounded shadow">
+          <div className="bg-white dark:bg-gray-800 p-4 rounded shadow">
             <div>Pending Leaves</div>
             <div className="text-2xl">5</div>
           </div>
         </div>
-        <div className="bg-white p-4 rounded shadow mb-4">
+        <div className="bg-white dark:bg-gray-800 p-4 rounded shadow mb-4">
           <h2 className="text-xl mb-2">Latest Audit</h2>
           <ul className="list-disc pl-5">
             <li>User &apos;admin&apos; logged in.</li>
@@ -56,7 +56,7 @@ export default function Dashboard() {
             <li>User &apos;admin&apos; updated payroll for employee #123.</li>
           </ul>
         </div>
-        <div className="bg-white p-4 rounded shadow">
+        <div className="bg-white dark:bg-gray-800 p-4 rounded shadow">
           <h2 className="text-xl mb-2">Quick Actions</h2>
           <div className="space-x-4">
             <Link href="/employees" className="text-blue-500">Manage Employees</Link>
