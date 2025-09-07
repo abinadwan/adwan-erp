@@ -2,14 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { setCookie } from 'nookies';
-import pool from '@/lib/db';
-
-interface User {
-  id: number;
-  username: string;
-  password: string;
-  role: string | null;
-}
+import supabase from '@/lib/db';
 
 // It is recommended to use environment variables for the JWT secret.
 // Create a .env.local file in the root of your project and add the following:
@@ -32,25 +25,29 @@ export default async function handler(
   }
 
   try {
-    const { rows } = await pool.query<User>(
-      'SELECT id, username, password, role FROM users WHERE username = $1',
-      [username]
-    );
+    const { data: user, error: userError } = await supabase
+      .from('users')
+      .select('id, username, password, role')
+      .eq('username', username)
+      .single();
 
-    if (rows.length === 0) {
+    if (userError || !user) {
       return res.status(401).json({ message: 'Incorrect username or password.' });
     }
 
-    const user = rows[0];
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
       return res.status(401).json({ message: 'Incorrect username or password.' });
     }
 
-    const token = jwt.sign({ id: user.id, username: user.username, role: user.role || 'Viewer' }, JWT_SECRET, {
-      expiresIn: '1h',
-    });
+    const token = jwt.sign(
+      { id: user.id, username: user.username, role: user.role || 'Viewer' },
+      JWT_SECRET,
+      {
+        expiresIn: '1h',
+      },
+    );
 
     setCookie({ res }, 'token', token, {
       httpOnly: true,
@@ -62,11 +59,8 @@ export default async function handler(
     res.status(200).json({ message: 'Login successful' });
   } catch (error) {
     console.error('Login error:', error);
-    const code = (error as { code?: string }).code;
-    const message =
-      code === 'ECONNREFUSED'
-        ? 'Could not connect to the database.'
-        : 'An error occurred on the server while trying to log in.';
-    res.status(500).json({ message });
+    res.status(500).json({
+      message: 'An error occurred on the server while trying to log in.',
+    });
   }
 }
