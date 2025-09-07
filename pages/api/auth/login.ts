@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { setCookie } from 'nookies';
 import supabase from '@/lib/db';
+import type { Database } from '@/lib/supabase/types';
 
 // It is recommended to use environment variables for the JWT secret.
 // Create a .env.local file in the root of your project and add the following:
@@ -25,11 +26,13 @@ export default async function handler(
   }
 
   try {
-    const { data: user, error: userError } = await supabase
+    const { data, error: userError } = await supabase
       .from('users')
       .select('id, username, password, role')
       .eq('username', username)
       .single();
+
+    const user = data as Database['public']['Tables']['users']['Row'] | null;
 
     if (userError || !user) {
       return res.status(401).json({ message: 'Incorrect username or password.' });
