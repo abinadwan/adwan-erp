@@ -62,6 +62,11 @@ export default async function handler(
     res.status(200).json({ message: 'Login successful' });
   } catch (error) {
     console.error('Login error:', error);
-    res.status(500).json({ message: 'An error occurred on the server while trying to log in.' });
+    const code = (error as { code?: string }).code;
+    const message =
+      code === 'ECONNREFUSED'
+        ? 'Could not connect to the database.'
+        : 'An error occurred on the server while trying to log in.';
+    res.status(500).json({ message });
   }
 }

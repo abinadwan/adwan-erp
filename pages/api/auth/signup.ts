@@ -44,6 +44,11 @@ export default async function handler(
     res.status(201).json({ message: 'User created successfully.' });
   } catch (error) {
     console.error('Signup error:', error);
-    res.status(500).json({ message: 'An error occurred on the server while trying to sign up.' });
+    const code = (error as { code?: string }).code;
+    const message =
+      code === 'ECONNREFUSED'
+        ? 'Could not connect to the database.'
+        : 'An error occurred on the server while trying to sign up.';
+    res.status(500).json({ message });
   }
 }
