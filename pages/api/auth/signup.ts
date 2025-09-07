@@ -1,7 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import bcrypt from 'bcryptjs';
 import supabase from '@/lib/db';
-import type { Database } from '@/lib/supabase/types';
 
 export default async function handler(
   req: NextApiRequest,
@@ -17,12 +16,15 @@ export default async function handler(
   };
 
   if (!username || !password) {
-    return res.status(400).json({ message: 'Please enter username and password.' });
+    return res
+      .status(400)
+      .json({ message: 'Please enter username and password.' });
   }
   if (password.length < 6) {
-    return res.status(400).json({ message: 'Password must be at least 6 characters long.' });
+    return res
+      .status(400)
+      .json({ message: 'Password must be at least 6 characters long.' });
   }
-
 
   try {
     const { data: existingUser, error: existingError } = await supabase
@@ -41,8 +43,9 @@ export default async function handler(
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
- ]);
- main
+    const { error: insertError } = await supabase
+      .from('users')
+      .insert([{ username, password: hashedPassword, role: 'user' }]);
 
     if (insertError) {
       throw insertError;
