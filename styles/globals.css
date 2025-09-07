@@ -1,28 +1,29 @@
+@import url("https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap");
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f9fafb;
+  --foreground: #1f2937;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: "Cairo", sans-serif;
   --font-mono: var(--font-geist-mono);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #1f2937;
+    --foreground: #f9fafb;
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
 }
 
 /* Improve table styling */
@@ -38,16 +39,16 @@ th, td {
 }
 
 th {
-  background-color: #f9fafb; /* gray-50 */
+  background-color: #e5e7eb; /* gray-200 */
   font-weight: 700;
 }
 
 tbody tr:nth-child(even) {
-  background-color: #f9fafb; /* gray-50 */
+  background-color: #f3f4f6; /* gray-100 */
 }
 
 tbody tr:hover {
-  background-color: #f3f4f6; /* gray-100 */
+  background-color: #e5e7eb; /* gray-200 */
 }
 
 /* Improve button styling */
@@ -57,11 +58,14 @@ td button {
     border-radius: 0.25rem;
     font-size: 0.875rem;
     transition: all 0.2s ease-in-out;
+    background-color: #3b82f6; /* blue-500 */
+    color: #ffffff;
 }
 
 td button:hover:not(:disabled) {
   transform: translateY(-1px);
   box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+  background-color: #2563eb; /* blue-600 */
 }
 
 @media print {
