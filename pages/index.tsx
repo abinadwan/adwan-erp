@@ -81,19 +81,19 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     };
   }
 
-  try {
-    // It's best to move the JWT_SECRET to a shared config/util file
-    const JWT_SECRET = process.env.JWT_SECRET;
-    if (!JWT_SECRET) throw new Error("JWT_SECRET not configured on the server.");
-    jwt.verify(token, JWT_SECRET);
-  } catch (error) {
-    return {
-      redirect: {
-        destination: '/login',
-        permanent: false,
-      },
-    };
-  }
+    try {
+      // It's best to move the JWT_SECRET to a shared config/util file
+      const JWT_SECRET = process.env.JWT_SECRET;
+      if (!JWT_SECRET) throw new Error("JWT_SECRET not configured on the server.");
+      jwt.verify(token, JWT_SECRET);
+    } catch {
+      return {
+        redirect: {
+          destination: '/login',
+          permanent: false,
+        },
+      };
+    }
 
   return {
     props: {},

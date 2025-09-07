@@ -5,11 +5,14 @@ import { setCookie } from 'nookies';
 import supabase from '@/lib/db';
 import type { Database } from '@/lib/supabase/types';
 
-// It is recommended to use environment variables for the JWT secret.
-// Create a .env.local file in the root of your project and add the following:
+// JWT secret must be provided via environment variables.
+// Create a .env.local file in the root of your project and set:
 // JWT_SECRET=your-super-secret-key
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your-super-secret-key';
+const JWT_SECRET = process.env.JWT_SECRET;
+if (!JWT_SECRET) {
+  throw new Error('JWT_SECRET environment variable is not set');
+}
 
 export default async function handler(
   req: NextApiRequest,
