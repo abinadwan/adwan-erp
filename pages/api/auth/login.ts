@@ -9,10 +9,17 @@ import type { Database } from '@/lib/supabase/types';
 // Create a .env.local file in the root of your project and set:
 // JWT_SECRET=your-super-secret-key
 
-const JWT_SECRET = process.env.JWT_SECRET;
-if (!JWT_SECRET) {
-  throw new Error('JWT_SECRET environment variable is not set');
-}
+// Safely read the JWT secret from the environment. Wrapping this in an
+// IIFE allows TypeScript to infer the returned value is always a string
+// after the runtime check, avoiding `string | undefined` issues at the
+// call site when signing the token.
+const JWT_SECRET: string = (() => {
+  const secret = process.env.JWT_SECRET;
+  if (!secret) {
+    throw new Error('JWT_SECRET environment variable is not set');
+  }
+  return secret;
+})();
 
 export default async function handler(
   req: NextApiRequest,
