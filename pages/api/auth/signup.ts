@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import bcrypt from 'bcryptjs';
 import supabase from '@/lib/db';
+import type { Database } from '@/lib/supabase/types';
 
 export default async function handler(
   req: NextApiRequest,
@@ -10,7 +11,10 @@ export default async function handler(
     return res.status(405).json({ message: 'Method Not Allowed' });
   }
 
-  const { username, password } = req.body;
+  const { username, password } = req.body as {
+    username: string;
+    password: string;
+  };
 
   if (!username || !password) {
     return res.status(400).json({ message: 'Please enter username and password.' });
@@ -37,11 +41,16 @@ export default async function handler(
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const { error: insertError } = await supabase.from('users').insert({
+    type UserInsert = Database['public']['Tables']['users']['Insert'];
+    const newUser: UserInsert = {
       username,
       password: hashedPassword,
       role: 'Viewer',
-    });
+    };
+
+    const { error: insertError } = await supabase
+      .from('users')
+      .insert([newUser]);
 
     if (insertError) {
       throw insertError;
