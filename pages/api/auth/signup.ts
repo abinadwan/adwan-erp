@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import bcrypt from 'bcryptjs';
 import supabase from '@/lib/db';
+import type { Database } from '@/lib/supabase/types';
 
 export default async function handler(
   req: NextApiRequest,
@@ -43,9 +44,15 @@ export default async function handler(
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    const newUser: Database['public']['Tables']['users']['Insert'] = {
+      username,
+      password: hashedPassword,
+      role: 'user',
+    };
+
     const { error: insertError } = await supabase
       .from('users')
-      .insert([{ username, password: hashedPassword, role: 'user' }]);
+      .insert([newUser]);
 
     if (insertError) {
       throw insertError;
