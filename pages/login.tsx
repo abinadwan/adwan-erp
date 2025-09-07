@@ -35,7 +35,7 @@ export default function LoginPage() {
 
   return (
     <div className="bg-gray-100 flex items-center justify-center min-h-screen">
-      <div className="max-w-sm w-full mx-auto mt-20 p-6 bg-white rounded shadow">
+      <div className="max-w-sm w-full mx-auto mt-20 p-6 bg-white dark:bg-gray-800 rounded shadow text-gray-800 dark:text-gray-100">
         <h1 className="text-2xl mb-4">Login</h1>
         <form onSubmit={handleLogin} className="space-y-4">
           <div>
@@ -46,7 +46,7 @@ export default function LoginPage() {
               name="username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="border p-2 w-full"
+              className="border p-2 w-full text-gray-800 dark:text-gray-100 bg-white dark:bg-gray-700 placeholder-gray-500 dark:placeholder-gray-400"
               required
             />
           </div>
@@ -58,7 +58,7 @@ export default function LoginPage() {
               name="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="border p-2 w-full"
+              className="border p-2 w-full text-gray-800 dark:text-gray-100 bg-white dark:bg-gray-700 placeholder-gray-500 dark:placeholder-gray-400"
               required
             />
           </div>
