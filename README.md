@@ -38,3 +38,31 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+
+## قسم باللغة العربية
+
+### فكرة المشروع
+
+نظام بسيط لتخطيط موارد المؤسسة (ERP) يوفّر صفحات لإدارة الأقسام والموظفين مع نظام تسجيل الدخول والتسجيل.
+
+### قاعدة البيانات المستخدمة
+
+يعتمد المشروع على خدمة Supabase المبنية على PostgreSQL لتخزين بيانات المستخدمين وإدارتها.
+
+### التقنية المستخدمة
+
+- Next.js و React لبناء الواجهة الأمامية.
+- TypeScript لكتابة الكود.
+- Tailwind CSS لتنسيق الواجهة.
+- Supabase و pg للتعامل مع قاعدة البيانات.
+- JSON Web Token ‏(JWT) و bcryptjs للمصادقة وحفظ الجلسات.
+
+### كيفية تشغيل التطبيق
+
+لتشغيل خادم التطوير محليًا استخدم:
+
+```bash
+npm run dev
+```
+
+ثم افتح المتصفح على العنوان `http://localhost:3000` لمعاينة التطبيق.
