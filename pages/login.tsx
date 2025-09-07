@@ -35,10 +35,9 @@ export default function LoginPage() {
 
   return (
 
-    <div className="bg-gray-100 flex items-center justify-center min-h-screen">
- main
-      <div className="max-w-sm w-full mx-auto mt-20 p-6 bg-white dark:bg-gray-800 rounded shadow text-gray-800 dark:text-gray-100">
-        <h1 className="text-2xl mb-4">Login</h1>
+    <div className="flex items-center justify-center min-h-[60vh]">
+      <div className="w-full max-w-sm card">
+        <h1 className="text-2xl mb-4 text-center">Login</h1>
         <form onSubmit={handleLogin} className="space-y-4">
           <div>
             <label className="block" htmlFor="username">Username</label>
@@ -48,7 +47,7 @@ export default function LoginPage() {
               name="username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="border p-2 w-full text-gray-800 dark:text-gray-100 bg-white dark:bg-gray-700 placeholder-gray-500 dark:placeholder-gray-400"
+              className="border p-2 w-full bg-white dark:bg-gray-700 text-[var(--color-text-primary)] dark:text-[var(--color-text-dark)] placeholder-[var(--color-text-secondary)]"
               required
             />
           </div>
@@ -60,17 +59,17 @@ export default function LoginPage() {
               name="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="border p-2 w-full text-gray-800 dark:text-gray-100 bg-white dark:bg-gray-700 placeholder-gray-500 dark:placeholder-gray-400"
+              className="border p-2 w-full bg-white dark:bg-gray-700 text-[var(--color-text-primary)] dark:text-[var(--color-text-dark)] placeholder-[var(--color-text-secondary)]"
               required
             />
           </div>
           {error && <p className="text-red-500 text-sm">{error}</p>}
-          <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded w-full">
+          <button type="submit" className="w-full px-4 py-2 rounded bg-[var(--color-primary)] hover:bg-[var(--color-secondary)] transition-colors text-white">
             Submit
           </button>
         </form>
         <div className="mt-4 text-center text-sm">
-          <Link href="/signup" className="text-blue-500 hover:underline">
+          <Link href="/signup" className="link">
             Create a new account
           </Link>
         </div>
